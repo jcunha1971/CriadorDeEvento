@@ -1,0 +1,175 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Event Management API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "role": { "type": "string" }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User registered" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful" }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "summary": "Get all events",
+        "responses": {
+          "200": { "description": "Events retrieved" }
+        }
+      },
+      "post": {
+        "summary": "Create an event",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "date": { "type": "string", "format": "date-time" },
+                  "location": { "type": "string" },
+                  "organizer": { "type": "string" }
+                },
+                "required": ["title", "description", "date", "location", "organizer"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Event created" }
+        }
+      }
+    },
+    "/events/{id}": {
+      "put": {
+        "summary": "Update an event",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "date": { "type": "string", "format": "date-time" },
+                  "location": { "type": "string" },
+                  "organizer": { "type": "string" }
+                },
+                "required": ["title", "description", "date", "location", "organizer"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Event updated" }
+        }
+      },
+      "delete": {
+        "summary": "Delete an event",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Event deleted" }
+        }
+      }
+    },
+    "/participants": {
+      "post": {
+        "summary": "Add a participant",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "eventId": { "type": "string" },
+                  "userId": { "type": "string" }
+                },
+                "required": ["eventId", "userId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Participant added" }
+        }
+      }
+    },
+    "/participants/{eventId}": {
+      "get": {
+        "summary": "Get participants by event",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Participants retrieved" }
+        }
+      }
+    }
+  }
+}
